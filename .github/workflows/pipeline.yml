@@ -12,7 +12,7 @@ jobs:
      uses: actions/Checkout@V2
    - name: Login to Dockerhub
      run: 
-      echo $DOCKERPASSWORD | docker login -u $DOCKERUSERNAME --password-stdin
+      docker login -u ${{secrets.DOCKERUSERNAME}} -p ${{secrets.DOCKERPASSWORD}}
    - name: build, tag and push
      env: 
       DOCKERHUBUSERNAME: ${{secrets.DOCKERUSERNAME}}
