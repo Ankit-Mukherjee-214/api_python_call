@@ -1,0 +1,21 @@
+on:
+ push:
+  branches: 
+   - main
+
+jobs:
+ deploy:
+  runs-on: Ubuntu-latest
+  name: Deploy_api_file
+  steps: 
+   - name: Checkout-code
+     uses: actions/Checkout@V2
+   - name: Login to Dockerhub
+     run: echo $DOCKERPASSWORD | docker login -u $DOCKERUSERNAME --password-stdin
+   - name: build, tag and push
+     env: 
+      DOCKERHUBUSERNAME: ${{secrets.DOCKERUSERNAME}}
+      IMAGENAME: api-image
+     run: 
+      docker buildx build --platform linux/amd64 -t $DOCKERHUBUSERNAME/$IMAGENAME --load .
+      docker push $DOCKERHUBUSERNAME/$IMAGENAME:latest
