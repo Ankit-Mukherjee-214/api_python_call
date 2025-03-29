@@ -20,5 +20,5 @@ jobs:
       DOCKERHUBUSERNAME: ${{secrets.DOCKERUSERNAME}}
       IMAGENAME: api-image
      run: 
-      docker buildx build --platform linux/amd64 -t $DOCKERHUBUSERNAME/$IMAGENAME --load .
+      docker buildx build --platform linux/amd64 -t $DOCKERHUBUSERNAME/$IMAGENAME --load /app
       docker push $DOCKERHUBUSERNAME/$IMAGENAME:latest
