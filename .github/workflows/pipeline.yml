@@ -13,10 +13,12 @@ jobs:
    - name: Login to Dockerhub
      run: 
       docker login -u ${{secrets.DOCKERUSERNAME}} -p ${{secrets.DOCKERPASSWORD}}
+   - name: Setup Docker Buildx
+     uses: docker/setup-buildx-action@v3
    - name: build, tag and push
      env: 
       DOCKERHUBUSERNAME: ${{secrets.DOCKERUSERNAME}}
       IMAGENAME: api-image
      run: 
-      docker buildx build --platform linux/amd64 -t $DOCKERHUBUSERNAME/$IMAGENAME --push .
+      docker buildx build --platform linux/amd64 -t $DOCKERHUBUSERNAME/$IMAGENAME --load .
       docker push $DOCKERHUBUSERNAME/$IMAGENAME:latest
